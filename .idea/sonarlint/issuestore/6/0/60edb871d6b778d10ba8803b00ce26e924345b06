@@ -1,0 +1,17 @@
+
+P
+java:S1117":Rename "strings" which hides the field declared at line 8.(ôÏŸ
+N	java:S106"9Replace this use of System.out or System.err by a logger.(¸ áÊ
+M	java:S106"9Replace this use of System.out or System.err by a logger.(ƒÚáB
+U
+java:S1117":Rename "strings" which hides the field declared at line 8.(ŒßîÆüÿÿÿÿ
+N	java:S106"9Replace this use of System.out or System.err by a logger.(ß²½
+M	java:S106"9Replace this use of System.out or System.err by a logger.(ƒÚáB
+S	java:S106"9Replace this use of System.out or System.err by a logger.(ê„Åüÿÿÿÿ
+N	java:S106"9Replace this use of System.out or System.err by a logger.(™€¾
+S	java:S106""9Replace this use of System.out or System.err by a logger.(üü’îşÿÿÿÿ
+N	java:S106("9Replace this use of System.out or System.err by a logger.(…Ëƒ¢
+S	java:S106,"9Replace this use of System.out or System.err by a logger.(Å²¢„øÿÿÿÿ
+N	java:S1060"9Replace this use of System.out or System.err by a logger.(ˆÙ¹„
+N	java:S1064"9Replace this use of System.out or System.err by a logger.(–õ„
+N	java:S1069"9Replace this use of System.out or System.err by a logger.(Ú×·ê
