@@ -1,28 +1,26 @@
 package org.game;
 
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Random;
 
 public class Computer extends GameMode {
 
-    public Computer() {
-    }
+    private static final long serialVersionUID = 3812003913183305888L;
 
-    public int getInputValue() {
-        Random r = null;
+    public void getInputValue() {
+        Random r;
         try {
             r = SecureRandom.getInstanceStrong();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-        return r.nextInt(2);
+        setValue(r.nextInt(3));
     }
 
     @Override
-    int draw() {
-        return 0;
+    void draw() {
+        //просто наследуется
     }
 
 }

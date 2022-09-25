@@ -25,9 +25,6 @@ public class Server implements Connection {
     @Override
     public Socket connection() {
         String status;
-        if (serverSocket != null && !serverSocket.isClosed()) {
-            logger.log(Level.INFO, "Server started earlier");
-        } else {
             try {
                 serverSocket = new ServerSocket(port, 50, InetAddress.getByName(ipStr));
                 logger.log(Level.INFO, "The server is running and waiting for a connection");
@@ -37,7 +34,6 @@ public class Server implements Connection {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
         return socket;
     }
 

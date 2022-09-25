@@ -1,7 +1,5 @@
 package org.game;
 
-import java.io.IOException;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -14,8 +12,7 @@ public class App {
     private final Scanner sc;
     private final ConsoleText consoleText;
     private final Logger logger;
-    private boolean active = true;
-    private int countGame = 1;
+    private int gameNumber = 1;
     private boolean isServer = false;
     private Socket socket;
     private Connection connection;
@@ -29,6 +26,7 @@ public class App {
     }
 
     public void start() {
+        boolean active = true;
         while (active) {
 
             startGame();
@@ -37,26 +35,15 @@ public class App {
     }
 
     private void startGame() {
-        int gameType = choiceGameType();
-        int countPlayer = 1;
-        Hub hub = null;
-        Game game = null;
+        int type = getGameType();
+        Hub hub;
+        Game game;
         int hostType;
 
-        while (true) {
-            consoleText.appChoiceConnectType();
 
-            hostType = inputInteger();
+        if (type == 1) {
 
-            if (hostType < 1 || hostType > 2) {
-                logger.log(Level.INFO, "Не верный выбор");
-            } else {
-                break;
-            }
-        }
-
-
-        if (gameType == 1) {
+            hostType = getHostType();
 
             closeConnection();
 
@@ -64,23 +51,38 @@ public class App {
 
             if (socket != null) {
                 hub = new Hub(socket);
-                game = new Game(countGame, isServer, hub);
+                game = new Game(gameNumber, isServer, hub,type);
                 game.start();
             }
 
-
         } else {
-            game = new Game(gameType, countGame);
+            game = new Game(type, gameNumber);
             game.start();
         }
-        countGame++;
+        gameNumber++;
     }
 
-    private int choiceGameType() {
+    private int getHostType() {
+        int hostType;
+        while (true) {
+            consoleText.appChoiceConnectType();
+
+            hostType = getInputInteger();
+
+            if (hostType < 1 || hostType > 2) {
+                logger.log(Level.INFO, "Не верный выбор");
+            } else {
+                break;
+            }
+        }
+        return hostType;
+    }
+
+    private int getGameType() {
         int choice;
         while (true) {
             consoleText.appChoiceGameType();
-            choice = inputInteger();
+            choice = getInputInteger();
             if (choice <= 0 || choice > 3) {
                 logger.log(Level.INFO, "Не верный выбор");
             } else {
@@ -88,7 +90,7 @@ public class App {
             }
         }
         return choice;
-    } //выбор типа игры
+    }
 
     private Socket getConnection(int hostType) {
 
@@ -105,29 +107,35 @@ public class App {
 
         if (hostType == 2) {
 
-            while (true) {
-                boolean valid;
-                consoleText.specifyIpAndPort();
+            createClient();
 
-                String strIp = sc.nextLine();
-
-                int port = inputInteger();
-
-                valid = adressValidator(strIp);
-
-                if (valid) {
-
-                    connection = new Client(strIp, port);
-
-                    socket = connection.connection();
-                    break;
-                }
-            }
         }
         return socket;
     }
 
-    private boolean adressValidator(String strIp) {
+    private void createClient() {
+
+        while (true) {
+            boolean valid;
+            consoleText.specifyIpAndPort();
+
+            String strIp = sc.nextLine();
+
+            int port = getInputInteger();
+
+            valid = isValidIp(strIp);
+
+            if (valid) {
+
+                connection = new Client(strIp, port);
+
+                socket = connection.connection();
+                break;
+            }
+        }
+    }
+
+    private boolean isValidIp(String strIp) {
         try {
             return InetAddress.getByName(strIp)
                     .getHostAddress().equals(strIp);
@@ -136,7 +144,7 @@ public class App {
         }
     }
 
-    private int inputInteger() {
+    private int getInputInteger() {
         int num = 0;
         String strInput;
 
@@ -149,9 +157,9 @@ public class App {
         }
 
         return num;
-    } // для обработки ошибки не int
+    }
 
-    private void closeConnection(){
+    private void closeConnection() {
         if (connection != null && !connection.isClose()) {
             connection.closeConnection();
         }

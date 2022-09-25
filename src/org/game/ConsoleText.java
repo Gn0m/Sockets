@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ConsoleText implements Serializable {
 
     private static final long serialVersionUID = 4583924641089848293L;
-    private String[] strings = {"Камень", "Ножницы", "Бумага","Ничья","Сдаться"};
+    private final String[] strings = {"Камень", "Ножницы", "Бумага", "Ничья", "Сдаться"};
 
     public void appChoiceGameType() {
         String[] strings = {"1. Против человека", "2. Против компьютера", "3. Компьютер против компьютера"};
@@ -53,7 +53,7 @@ public class ConsoleText implements Serializable {
                 + " | " + player2.getWinnerCount());
     }
 
-    public void confirmRefuse(){
+    public void confirmRefuse() {
         System.out.println("1. Согласиться" + "\n" + "2. Отказаться");
     }
 }
